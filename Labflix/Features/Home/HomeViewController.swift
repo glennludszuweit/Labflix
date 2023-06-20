@@ -16,13 +16,15 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let headerView = HeroHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 500))
 
         view.backgroundColor = .systemBackground
         view.addSubview(homeTable)
         
         homeTable.dataSource = self
         homeTable.delegate = self
-        homeTable.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 500))
+        homeTable.tableHeaderView = headerView
     }
     
     override func viewDidLayoutSubviews() {
