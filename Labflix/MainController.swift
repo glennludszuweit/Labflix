@@ -8,7 +8,7 @@
 import UIKit
 
 class MainController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,7 +29,6 @@ class MainController: UITabBarController {
         downloadsVC.title = "Downloads"
         
         tabBar.tintColor = .label
-        tabBar.backgroundColor = .systemBackground.withAlphaComponent(0.75)
         setViewControllers([homeVC, comingVC, searchVC, downloadsVC], animated: true)
     }
 }

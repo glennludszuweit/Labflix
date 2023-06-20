@@ -19,6 +19,7 @@
 		D47E45412A408AD5007E9870 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45402A408AD5007E9870 /* SearchViewController.swift */; };
 		D47E45442A408B3F007E9870 /* ComingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45432A408B3F007E9870 /* ComingViewController.swift */; };
 		D47E45472A408B87007E9870 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45462A408B87007E9870 /* DownloadsViewController.swift */; };
+		D47E454B2A417648007E9870 /* CollectionViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E454A2A417648007E9870 /* CollectionViewTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		D47E45402A408AD5007E9870 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		D47E45432A408B3F007E9870 /* ComingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingViewController.swift; sourceTree = "<group>"; };
 		D47E45462A408B87007E9870 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
+		D47E454A2A417648007E9870 /* CollectionViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,8 @@
 		D47E450A2A3C6F7E007E9870 /* Labflix */ = {
 			isa = PBXGroup;
 			children = (
+				D47E45482A41760A007E9870 /* Services */,
+				D47E45492A417616007E9870 /* Components */,
 				D47E453B2A408A77007E9870 /* Features */,
 				D47E450B2A3C6F7E007E9870 /* AppDelegate.swift */,
 				D47E450D2A3C6F7E007E9870 /* SceneDelegate.swift */,
@@ -174,6 +178,21 @@
 				D47E45462A408B87007E9870 /* DownloadsViewController.swift */,
 			);
 			path = Downloads;
+			sourceTree = "<group>";
+		};
+		D47E45482A41760A007E9870 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D47E45492A417616007E9870 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D47E454A2A417648007E9870 /* CollectionViewTableViewCell.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,6 +327,7 @@
 			files = (
 				D47E45442A408B3F007E9870 /* ComingViewController.swift in Sources */,
 				D47E45412A408AD5007E9870 /* SearchViewController.swift in Sources */,
+				D47E454B2A417648007E9870 /* CollectionViewTableViewCell.swift in Sources */,
 				D47E45472A408B87007E9870 /* DownloadsViewController.swift in Sources */,
 				D47E45102A3C6F7E007E9870 /* MainController.swift in Sources */,
 				D47E450C2A3C6F7E007E9870 /* AppDelegate.swift in Sources */,
