@@ -22,6 +22,7 @@
 		D47E454B2A417648007E9870 /* CollectionViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E454A2A417648007E9870 /* CollectionViewTableViewCell.swift */; };
 		D47E454D2A418499007E9870 /* HeroHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E454C2A418499007E9870 /* HeroHeaderView.swift */; };
 		D47E45552A41B7AA007E9870 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45542A41B7AA007E9870 /* Extensions.swift */; };
+		D47E45572A41C029007E9870 /* HomeViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45562A41C029007E9870 /* HomeViewExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		D47E454A2A417648007E9870 /* CollectionViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableViewCell.swift; sourceTree = "<group>"; };
 		D47E454C2A418499007E9870 /* HeroHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroHeaderView.swift; sourceTree = "<group>"; };
 		D47E45542A41B7AA007E9870 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		D47E45562A41C029007E9870 /* HomeViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				D47E453D2A408A96007E9870 /* HomeViewController.swift */,
+				D47E45562A41C029007E9870 /* HomeViewExtensions.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				D47E45102A3C6F7E007E9870 /* MainController.swift in Sources */,
 				D47E450C2A3C6F7E007E9870 /* AppDelegate.swift in Sources */,
 				D47E450E2A3C6F7E007E9870 /* SceneDelegate.swift in Sources */,
+				D47E45572A41C029007E9870 /* HomeViewExtensions.swift in Sources */,
 				D47E453E2A408A96007E9870 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
