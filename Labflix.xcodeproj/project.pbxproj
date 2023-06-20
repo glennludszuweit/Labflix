@@ -23,6 +23,9 @@
 		D47E454D2A418499007E9870 /* HeroHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E454C2A418499007E9870 /* HeroHeaderView.swift */; };
 		D47E45552A41B7AA007E9870 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45542A41B7AA007E9870 /* Extensions.swift */; };
 		D47E45572A41C029007E9870 /* HomeViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45562A41C029007E9870 /* HomeViewExtensions.swift */; };
+		D47E455F2A41D0B4007E9870 /* APIServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E455C2A41D0B4007E9870 /* APIServices.swift */; };
+		D47E45602A41D0B4007E9870 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E455D2A41D0B4007E9870 /* NetworkManager.swift */; };
+		D47E45612A41D0B4007E9870 /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E455E2A41D0B4007E9870 /* ErrorManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +66,9 @@
 		D47E454C2A418499007E9870 /* HeroHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroHeaderView.swift; sourceTree = "<group>"; };
 		D47E45542A41B7AA007E9870 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D47E45562A41C029007E9870 /* HomeViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewExtensions.swift; sourceTree = "<group>"; };
+		D47E455C2A41D0B4007E9870 /* APIServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIServices.swift; sourceTree = "<group>"; };
+		D47E455D2A41D0B4007E9870 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		D47E455E2A41D0B4007E9870 /* ErrorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +196,9 @@
 		D47E45482A41760A007E9870 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D47E455C2A41D0B4007E9870 /* APIServices.swift */,
+				D47E455E2A41D0B4007E9870 /* ErrorManager.swift */,
+				D47E455D2A41D0B4007E9870 /* NetworkManager.swift */,
 				D47E45542A41B7AA007E9870 /* Extensions.swift */,
 			);
 			path = Services;
@@ -336,6 +345,9 @@
 			files = (
 				D47E45442A408B3F007E9870 /* ComingViewController.swift in Sources */,
 				D47E45412A408AD5007E9870 /* SearchViewController.swift in Sources */,
+				D47E45612A41D0B4007E9870 /* ErrorManager.swift in Sources */,
+				D47E455F2A41D0B4007E9870 /* APIServices.swift in Sources */,
+				D47E45602A41D0B4007E9870 /* NetworkManager.swift in Sources */,
 				D47E454B2A417648007E9870 /* CollectionViewTableViewCell.swift in Sources */,
 				D47E45472A408B87007E9870 /* DownloadsViewController.swift in Sources */,
 				D47E454D2A418499007E9870 /* HeroHeaderView.swift in Sources */,
