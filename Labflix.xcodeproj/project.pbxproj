@@ -21,6 +21,7 @@
 		D47E45472A408B87007E9870 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45462A408B87007E9870 /* DownloadsViewController.swift */; };
 		D47E454B2A417648007E9870 /* CollectionViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E454A2A417648007E9870 /* CollectionViewTableViewCell.swift */; };
 		D47E454D2A418499007E9870 /* HeroHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E454C2A418499007E9870 /* HeroHeaderView.swift */; };
+		D47E45552A41B7AA007E9870 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45542A41B7AA007E9870 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		D47E45462A408B87007E9870 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
 		D47E454A2A417648007E9870 /* CollectionViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewTableViewCell.swift; sourceTree = "<group>"; };
 		D47E454C2A418499007E9870 /* HeroHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroHeaderView.swift; sourceTree = "<group>"; };
+		D47E45542A41B7AA007E9870 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 		D47E45482A41760A007E9870 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D47E45542A41B7AA007E9870 /* Extensions.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				D47E454B2A417648007E9870 /* CollectionViewTableViewCell.swift in Sources */,
 				D47E45472A408B87007E9870 /* DownloadsViewController.swift in Sources */,
 				D47E454D2A418499007E9870 /* HeroHeaderView.swift in Sources */,
+				D47E45552A41B7AA007E9870 /* Extensions.swift in Sources */,
 				D47E45102A3C6F7E007E9870 /* MainController.swift in Sources */,
 				D47E450C2A3C6F7E007E9870 /* AppDelegate.swift in Sources */,
 				D47E450E2A3C6F7E007E9870 /* SceneDelegate.swift in Sources */,

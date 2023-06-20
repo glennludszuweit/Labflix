@@ -13,6 +13,16 @@ class HomeViewController: UIViewController {
         table.register(CollectionViewTableViewCell.self, forCellReuseIdentifier: CollectionViewTableViewCell.identifier)
         return table
     }()
+    
+    private func configureNavBar() {
+        var logo = UIImage(named: "logo")
+        logo = logo?.resized(to: CGSize(width: 48, height: 48))
+        logo = logo?.withRenderingMode(.alwaysOriginal)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: logo, style: .done, target: self, action: nil)
+        navigationItem.rightBarButtonItem =
+            UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
+        navigationController?.navigationBar.tintColor = .label
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +31,8 @@ class HomeViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
         view.addSubview(homeTable)
+        
+        configureNavBar()
         
         homeTable.dataSource = self
         homeTable.delegate = self
@@ -53,5 +65,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let defaultOffset = view.safeAreaInsets.top
+        let offset = scrollView.contentOffset.y + defaultOffset
+        
+        navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
     }
 }
