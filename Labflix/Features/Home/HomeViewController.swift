@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-    let sectionTitles: [String] = ["Trending Movies", "Trending TV Shows", "Popular", "Upcoming Movies", "Top Rated"]
+    let sectionTitles: [String] = ["Trending Movies", "Popular Movies", "Upcoming Movies", "Top Rated"]
     
     private let homeTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)

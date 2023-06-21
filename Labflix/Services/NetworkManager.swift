@@ -9,11 +9,11 @@ import Foundation
 import Combine
 
 protocol NetworkProtocol {
-    func getAll<T: Decodable>(apiUrl: URL, type: T.Type) -> AnyPublisher<T, Error>
+    func get<T: Decodable>(apiUrl: URL, type: T.Type) -> AnyPublisher<T, Error>
 }
 
 class NetworkManager: NetworkProtocol {
-    func getAll<T>(apiUrl: URL, type: T.Type) -> AnyPublisher<T, Error> where T : Decodable {
+    func get<T>(apiUrl: URL, type: T.Type) -> AnyPublisher<T, Error> where T : Decodable {
         return URLSession.shared.dataTaskPublisher(for: apiUrl)
             .tryMap { (data, response) -> Data in
                 guard let httpResponse = response as? HTTPURLResponse,

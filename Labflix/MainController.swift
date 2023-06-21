@@ -16,7 +16,7 @@ class MainController: UITabBarController {
         homeVC.tabBarItem.image = UIImage(systemName: "house")
         homeVC.title = "Home"
         
-        let comingVC = UINavigationController(rootViewController: ComingViewController())
+        let comingVC = UINavigationController(rootViewController: UpcomingViewController())
         comingVC.tabBarItem.image = UIImage(systemName: "play.circle")
         comingVC.title = "Coming Up"
         
