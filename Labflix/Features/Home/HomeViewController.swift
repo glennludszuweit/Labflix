@@ -7,8 +7,14 @@
 
 import UIKit
 
+@MainActor
 class HomeViewController: UIViewController {
-    let sectionTitles: [String] = ["Trending Movies", "Popular Movies", "Upcoming Movies", "Top Rated"]
+    let popularViewModel = PopularViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
+    let trendingViewModel = TrendingViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
+    let upcomingViewModel = UpcomingViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
+    let topRatedViewModel = TopRatedViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
+    
+    var sections: [String:[Movie]] = ["Trending Movies": [], "Popular Movies": [], "Upcoming Movies": [], "Top Rated": []]
     
     private let homeTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -25,7 +31,7 @@ class HomeViewController: UIViewController {
             UIBarButtonItem(image: UIImage(systemName: "play.rectangle"), style: .done, target: self, action: nil)
         navigationController?.navigationBar.tintColor = .label
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,10 +45,19 @@ class HomeViewController: UIViewController {
         homeTable.dataSource = self
         homeTable.delegate = self
         homeTable.tableHeaderView = headerView
+        
+        trendingViewModel.getTrendingMovies(apiUrl: APIServices.trendingMovies)
+        popularViewModel.getPopularMovies(apiUrl: APIServices.popularMovies)
+        upcomingViewModel.getUpcomingMovies(apiUrl: APIServices.upcomingMovies)
+        topRatedViewModel.getTopRatedMovies(apiUrl: APIServices.topRatedMovies)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         homeTable.frame = view.bounds
+        
+        DispatchQueue.main.async {
+            self.sections = ["Trending Movies": self.trendingViewModel.trendingMovies, "Popular Movies": self.popularViewModel.popularMovies, "Upcoming Movies": self.upcomingViewModel.upcomingMovies, "Top Rated": self.topRatedViewModel.topRatedMovies]
+        }
     }
 }

@@ -8,6 +8,7 @@
 import UIKit
 
 class CollectionViewTableViewCell: UITableViewCell {
+    var movies = [[Movie]]()
     static let identifier = "CollectionViewTableViewCell"
     
     private let collectionView: UICollectionView = {
@@ -46,6 +47,6 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return movies.count
     }
 }
