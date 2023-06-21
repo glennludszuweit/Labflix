@@ -12,6 +12,7 @@ class APIServices {
     static private let ratKey: String = "\(Bundle.main.infoDictionary?["TMDB-RAT"] ?? "")"
     
     static let tmdbBaseUrl: String = "https://api.themoviedb.org/3/"
+    static let imageBaseUrl500: String = "https://image.tmdb.org/t/p/w500"
     static let trendingMovies: String = "\(tmdbBaseUrl)trending/movie/week?api_key=\(apiKey)"
     static let popularMovies: String = "\(tmdbBaseUrl)movie/popular?api_key=\(apiKey)"
     static let upcomingMovies: String = "\(tmdbBaseUrl)movie/upcoming?api_key=\(apiKey)"

@@ -10,7 +10,7 @@ import UIKit
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return homeViewModel.sectionsTitle.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -19,8 +19,34 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewTableViewCell.identifier, for: indexPath) as? CollectionViewTableViewCell else { return UITableViewCell() }
-        let movies = Array(sections.values)
-        cell.movies = movies
+        switch indexPath.section {
+        case Sections.trending.rawValue:
+            homeViewModel.getTrendingMovies(apiUrl: APIServices.trendingMovies)
+            DispatchQueue.main.async { [weak self] in
+                guard let movies = self?.homeViewModel.trendingMovies else { return }
+                cell.setMovies(with: movies)
+            }
+        case Sections.popular.rawValue:
+            homeViewModel.getPopularMovies(apiUrl: APIServices.popularMovies)
+            DispatchQueue.main.async { [weak self] in
+                guard let movies = self?.homeViewModel.popularMovies else { return }
+                cell.setMovies(with: movies)
+            }
+        case Sections.upcoming.rawValue:
+            homeViewModel.getUpcomingMovies(apiUrl: APIServices.upcomingMovies)
+            DispatchQueue.main.async { [weak self] in
+                guard let movies = self?.homeViewModel.upcomingMovies else { return }
+                cell.setMovies(with: movies)
+            }
+        case Sections.topRated.rawValue:
+            homeViewModel.getTopRatedMovies(apiUrl: APIServices.topRatedMovies)
+            DispatchQueue.main.async { [weak self] in
+                guard let movies = self?.homeViewModel.topRatedMovies else { return }
+                cell.setMovies(with: movies)
+            }
+        default:
+            return UITableViewCell()
+        }
         return cell
     }
     
@@ -33,8 +59,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let titles = Array(sections.keys)
-        return titles[section]
+        return homeViewModel.sectionsTitle[section]
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
