@@ -34,6 +34,7 @@
 		D47E45902A44591A007E9870 /* UpcomingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E458F2A44591A007E9870 /* UpcomingViewModel.swift */; };
 		D47E45952A44D32C007E9870 /* UpcomingViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45942A44D32C007E9870 /* UpcomingViewExtension.swift */; };
 		D47E45972A44DE60007E9870 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45962A44DE60007E9870 /* MovieTableViewCell.swift */; };
+		D47E45992A44EFCD007E9870 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D47E45982A44EFCD007E9870 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		D47E458F2A44591A007E9870 /* UpcomingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingViewModel.swift; sourceTree = "<group>"; };
 		D47E45942A44D32C007E9870 /* UpcomingViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingViewExtension.swift; sourceTree = "<group>"; };
 		D47E45962A44DE60007E9870 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
+		D47E45982A44EFCD007E9870 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 		D47E44FF2A3C6F7E007E9870 = {
 			isa = PBXGroup;
 			children = (
+				D47E45982A44EFCD007E9870 /* README.md */,
 				D47E450A2A3C6F7E007E9870 /* Labflix */,
 				D47E45212A3C6F81007E9870 /* LabflixTests */,
 				D47E452B2A3C6F81007E9870 /* LabflixUITests */,
@@ -354,6 +357,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D47E45992A44EFCD007E9870 /* README.md in Resources */,
 				D47E45182A3C6F80007E9870 /* LaunchScreen.storyboard in Resources */,
 				D47E45152A3C6F80007E9870 /* Assets.xcassets in Resources */,
 			);
