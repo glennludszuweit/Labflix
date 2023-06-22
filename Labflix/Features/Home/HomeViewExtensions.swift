@@ -21,29 +21,62 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewTableViewCell.identifier, for: indexPath) as? CollectionViewTableViewCell else { return UITableViewCell() }
         switch indexPath.section {
         case Sections.trending.rawValue:
-            homeViewModel.getTrendingMovies(apiUrl: APIServices.trendingMovies)
-            DispatchQueue.main.async { [weak self] in
-                guard let movies = self?.homeViewModel.trendingMovies else { return }
-                cell.setMovies(with: movies)
-            }
+            homeViewModel.getMovies(apiUrl: APIServices.trendingMovies)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        print("Tending movies populated.")
+                        break
+                    case .failure(let error):
+                        print("Error: \(error)")
+                    }
+                } receiveValue: { movies in
+                    cell.setMovies(with: movies)
+                }
+                .store(in: &homeViewModel.cancellable)
+            
         case Sections.popular.rawValue:
-            homeViewModel.getPopularMovies(apiUrl: APIServices.popularMovies)
-            DispatchQueue.main.async { [weak self] in
-                guard let movies = self?.homeViewModel.popularMovies else { return }
-                cell.setMovies(with: movies)
-            }
+            homeViewModel.getMovies(apiUrl: APIServices.popularMovies)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        print("Tending movies populated.")
+                        break
+                    case .failure(let error):
+                        print("Error: \(error)")
+                    }
+                } receiveValue: { movies in
+                    cell.setMovies(with: movies)
+                }
+                .store(in: &homeViewModel.cancellable)
         case Sections.upcoming.rawValue:
-            homeViewModel.getUpcomingMovies(apiUrl: APIServices.upcomingMovies)
-            DispatchQueue.main.async { [weak self] in
-                guard let movies = self?.homeViewModel.upcomingMovies else { return }
-                cell.setMovies(with: movies)
-            }
+            homeViewModel.getMovies(apiUrl: APIServices.upcomingMovies)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        print("Tending movies populated.")
+                        break
+                    case .failure(let error):
+                        print("Error: \(error)")
+                    }
+                } receiveValue: { movies in
+                    cell.setMovies(with: movies)
+                }
+                .store(in: &homeViewModel.cancellable)
         case Sections.topRated.rawValue:
-            homeViewModel.getTopRatedMovies(apiUrl: APIServices.topRatedMovies)
-            DispatchQueue.main.async { [weak self] in
-                guard let movies = self?.homeViewModel.topRatedMovies else { return }
-                cell.setMovies(with: movies)
-            }
+            homeViewModel.getMovies(apiUrl: APIServices.topRatedMovies)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        print("Tending movies populated.")
+                        break
+                    case .failure(let error):
+                        print("Error: \(error)")
+                    }
+                } receiveValue: { movies in
+                    cell.setMovies(with: movies)
+                }
+                .store(in: &homeViewModel.cancellable)
         default:
             return UITableViewCell()
         }

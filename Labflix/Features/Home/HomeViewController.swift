@@ -7,7 +7,6 @@
 
 import UIKit
 
-@MainActor
 class HomeViewController: UIViewController {
     let homeViewModel = HomeViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
     
