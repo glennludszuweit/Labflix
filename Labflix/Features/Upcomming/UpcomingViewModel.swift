@@ -9,11 +9,8 @@ import Foundation
 import Combine
 
 class UpcomingViewModel: ObservableObject {
-    @Published var movies: [Movie] = []
-    @Published var errorMessage: String = ""
-    
-    private var cancellable = Set<AnyCancellable>()
-    
+    var errorMessage: String = ""
+    var cancellable = Set<AnyCancellable>()
     var networkManager: NetworkProtocol
     var errorManager: ErrorProtocol
     
@@ -22,24 +19,20 @@ class UpcomingViewModel: ObservableObject {
         self.errorManager = errorManager
     }
     
-    func getUpcomingMovies(apiUrl: String) {
+    func getUpcomingMovies(apiUrl: String) -> AnyPublisher<[Movie], Error> {
         guard let url = URL(string: apiUrl) else {
             self.errorMessage = errorManager.handleError(APIError.invalidURL)
-            return
+            return Fail(error: APIError.invalidURL).eraseToAnyPublisher()
         }
         
-        self.networkManager.get(apiUrl: url, type: Movies.self)
+        return self.networkManager.get(apiUrl: url, type: Movies.self)
+            .map { $0.results }
             .receive(on: DispatchQueue.main)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    print("Movies populated with trending movies.")
-                case .failure(let error):
-                    self.errorMessage = self.errorManager.handleError(error)
+            .handleEvents(receiveCompletion: { [weak self] completion in
+                if case let .failure(error) = completion {
+                    self?.errorMessage = self?.errorManager.handleError(error) ?? ""
                 }
-            } receiveValue: { data in
-                self.movies = data.results
-            }
-            .store(in: &cancellable)
+            })
+            .eraseToAnyPublisher()
     }
 }

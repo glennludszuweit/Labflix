@@ -44,7 +44,7 @@ class HomeViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         homeTable.frame = view.bounds
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             self?.homeTable.reloadData()
         }
     }

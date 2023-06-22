@@ -16,9 +16,8 @@ enum Sections: Int {
 }
 
 class HomeViewModel: ObservableObject {
-    @Published var sectionsTitle: [String] = ["Trending Movies", "Popular Movies", "Upcoming Movies", "Top Rated"]
-    @Published var errorMessage: String = ""
-    
+    let sectionsTitle: [String] = ["Trending Movies", "Popular Movies", "Upcoming Movies", "Top Rated"]
+    var errorMessage: String = ""
     var cancellable = Set<AnyCancellable>()
     var networkManager: NetworkProtocol
     var errorManager: ErrorProtocol

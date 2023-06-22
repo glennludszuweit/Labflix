@@ -40,7 +40,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 .sink { completion in
                     switch completion {
                     case .finished:
-                        print("Tending movies populated.")
+                        print("Popular movies populated.")
                         break
                     case .failure(let error):
                         print("Error: \(error)")
@@ -54,7 +54,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 .sink { completion in
                     switch completion {
                     case .finished:
-                        print("Tending movies populated.")
+                        print("Upcoming movies populated.")
                         break
                     case .failure(let error):
                         print("Error: \(error)")
@@ -68,7 +68,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 .sink { completion in
                     switch completion {
                     case .finished:
-                        print("Tending movies populated.")
+                        print("Top rated movies populated.")
                         break
                     case .failure(let error):
                         print("Error: \(error)")
