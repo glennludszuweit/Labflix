@@ -17,4 +17,6 @@ class APIServices {
     static let popularMovies: String = "\(tmdbBaseUrl)movie/popular?api_key=\(apiKey)"
     static let upcomingMovies: String = "\(tmdbBaseUrl)movie/upcoming?api_key=\(apiKey)"
     static let topRatedMovies: String = "\(tmdbBaseUrl)movie/top_rated?api_key=\(apiKey)"
+    static let discoverMovies: String = "\(tmdbBaseUrl)discover/movie?api_key=\(apiKey)"
+    static let searchMovies: String = "\(tmdbBaseUrl)search/movie?api_key=\(apiKey)&query="
 }

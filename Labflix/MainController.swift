@@ -17,8 +17,8 @@ class MainController: UITabBarController {
         homeVC.title = "Home"
         
         let comingVC = UINavigationController(rootViewController: UpcomingViewController())
-        comingVC.tabBarItem.image = UIImage(systemName: "play.circle")
-        comingVC.title = "Coming Up"
+        comingVC.tabBarItem.image = UIImage(systemName: "megaphone")
+        comingVC.title = "Upcoming"
         
         let searchVC = UINavigationController(rootViewController: SearchViewController())
         searchVC.tabBarItem.image = UIImage(systemName: "magnifyingglass")

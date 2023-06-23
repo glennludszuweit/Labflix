@@ -29,7 +29,7 @@ class MovieTableViewCell: UITableViewCell {
     
     private let playButton: UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: "play.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))
+        let image = UIImage(systemName: "play.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30))
         button.setImage(image, for: .normal)
         button.tintColor = .label
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -39,8 +39,8 @@ class MovieTableViewCell: UITableViewCell {
     private func applyConstraints() {
         let posterImageViewConstraints = [
             posterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-            posterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
+            posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            posterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             posterImageView.widthAnchor.constraint(equalToConstant: 75)
         ]
         let movieLabelConstraints = [
@@ -49,7 +49,7 @@ class MovieTableViewCell: UITableViewCell {
             movieLabel.widthAnchor.constraint(equalToConstant: 200),
         ]
         let playButtonConstraints = [
-            playButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            playButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             playButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ]
         

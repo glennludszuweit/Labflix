@@ -8,8 +8,8 @@
 import UIKit
 
 class UpcomingViewController: UIViewController {
-    let upcomingViewModel = UpcomingViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
-    var movies: [Movie] = []
+    private let upcomingViewModel = UpcomingViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
+    private var movies: [Movie] = []
     
     private let upcomingTable: UITableView = {
         let table = UITableView()
@@ -43,7 +43,6 @@ class UpcomingViewController: UIViewController {
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         
         view.addSubview(upcomingTable)
-        
         upcomingTable.dataSource = self
         upcomingTable.delegate = self
         
@@ -54,6 +53,20 @@ class UpcomingViewController: UIViewController {
         super.viewDidLayoutSubviews()
         upcomingTable.frame = view.bounds
     }
+}
+
+extension UpcomingViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return movies.count
+    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as? MovieTableViewCell else { return UITableViewCell() }
+        cell.setCellData(with: movies[indexPath.row])
+        return cell
+    }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
+    }
 }
