@@ -35,4 +35,21 @@ class SearchViewModel: ObservableObject {
             })
             .eraseToAnyPublisher()
     }
+    
+    func getSearchedMovies(apiUrl: String) -> AnyPublisher<[Movie], Error> {
+        guard let url = URL(string: apiUrl) else {
+            self.errorMessage = errorManager.handleError(APIError.invalidURL)
+            return Fail(error: APIError.invalidURL).eraseToAnyPublisher()
+        }
+        
+        return self.networkManager.get(apiUrl: url, type: Movies.self)
+            .map { $0.results }
+            .receive(on: DispatchQueue.main)
+            .handleEvents(receiveCompletion: { [weak self] completion in
+                if case let .failure(error) = completion {
+                    self?.errorMessage = self?.errorManager.handleError(error) ?? ""
+                }
+            })
+            .eraseToAnyPublisher()
+    }
 }

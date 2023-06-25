@@ -26,6 +26,24 @@ class SearchViewController: UIViewController {
         return search
     }()
     
+    private func searchMovies() {
+        searchViewModel.getDiscoverMovies(apiUrl: "\(APIServices.searchMovies)\(searchTerm)")
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    DispatchQueue.main.async {
+                        self?.discoverTable.reloadData()
+                    }
+                    break
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            } receiveValue: { [weak self] movies in
+                self?.movies = movies
+            }
+            .store(in: &searchViewModel.cancellable)
+    }
+    
     private func getDiscoverMovies() {
         searchViewModel.getDiscoverMovies(apiUrl: APIServices.discoverMovies)
             .sink { [weak self] completion in
@@ -49,6 +67,7 @@ class SearchViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         
         view.addSubview(discoverTable)
@@ -63,12 +82,17 @@ class SearchViewController: UIViewController {
     }
 }
 
-extension SearchViewController: UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating {
+extension SearchViewController: UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text {
             self.searchTerm = text
         }
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+            // Perform the submit button action here
+        searchMovies()
+        }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
