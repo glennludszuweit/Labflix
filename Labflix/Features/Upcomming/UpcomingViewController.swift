@@ -17,8 +17,8 @@ class UpcomingViewController: UIViewController {
         return table
     }()
     
-    private func getUpcomingMovies() {
-        upcomingViewModel.getUpcomingMovies(apiUrl: APIServices.upcomingMovies)
+    private func getUpcomingMovies(page: Int = 1) {
+        upcomingViewModel.getUpcomingMovies(apiUrl: "\(APIServices.upcomingMovies)&page=\(page)")
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:
@@ -68,5 +68,9 @@ extension UpcomingViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("working")
     }
 }

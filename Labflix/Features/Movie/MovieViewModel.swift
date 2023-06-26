@@ -1,14 +1,14 @@
 //
-//  SearchViewModel.swift
+//  MovieViewModel.swift
 //  Labflix
 //
-//  Created by Glenn Ludszuweit on 23/06/2023.
+//  Created by Glenn Ludszuweit on 25/06/2023.
 //
 
 import Foundation
 import Combine
 
-class SearchViewModel: ObservableObject {
+class MovieViewModel: ObservableObject {
     var errorMessage: String = ""
     var cancellable = Set<AnyCancellable>()
     var networkManager: NetworkProtocol
@@ -19,24 +19,7 @@ class SearchViewModel: ObservableObject {
         self.errorManager = errorManager
     }
     
-    func getDiscoverMovies(apiUrl: String) -> AnyPublisher<[Movie], Error> {
-        guard let url = URL(string: apiUrl) else {
-            self.errorMessage = errorManager.handleError(APIError.invalidURL)
-            return Fail(error: APIError.invalidURL).eraseToAnyPublisher()
-        }
-        
-        return self.networkManager.get(apiUrl: url, type: Movies.self)
-            .map { $0.results }
-            .receive(on: DispatchQueue.main)
-            .handleEvents(receiveCompletion: { [weak self] completion in
-                if case let .failure(error) = completion {
-                    self?.errorMessage = self?.errorManager.handleError(error) ?? ""
-                }
-            })
-            .eraseToAnyPublisher()
-    }
-    
-    func getSearchedMovies(apiUrl: String, query: String) -> AnyPublisher<[Movie], Error> {
+    func getMovie(apiUrl: String, query: String) -> AnyPublisher<YoutubeVideo, Error> {
         guard let query = query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
             return Fail(error: APIError.invalidURL).eraseToAnyPublisher()
         }
@@ -46,8 +29,8 @@ class SearchViewModel: ObservableObject {
             return Fail(error: APIError.invalidURL).eraseToAnyPublisher()
         }
         
-        return self.networkManager.get(apiUrl: url, type: Movies.self)
-            .map { $0.results }
+        return self.networkManager.get(apiUrl: url, type: Youtube.self)
+            .map { $0.items[0] }
             .receive(on: DispatchQueue.main)
             .handleEvents(receiveCompletion: { [weak self] completion in
                 if case let .failure(error) = completion {

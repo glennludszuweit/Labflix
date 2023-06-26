@@ -9,6 +9,7 @@ import UIKit
 
 class HomeViewController: UIViewController {
     private let homeViewModel = HomeViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
+    private let movieViewModel = MovieViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
     
     private let homeTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -50,7 +51,8 @@ class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+extension HomeViewController: UITableViewDataSource, UITableViewDelegate, CollectionViewTableViewCellDelegate {
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return homeViewModel.sectionsTitle.count
     }
@@ -61,6 +63,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CollectionViewTableViewCell.identifier, for: indexPath) as? CollectionViewTableViewCell else { return UITableViewCell() }
+        cell.delegate = self
+        
         switch indexPath.section {
         case Sections.trending.rawValue:
             homeViewModel.getMovies(apiUrl: APIServices.trendingMovies)
@@ -148,7 +152,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let defaultOffset = view.safeAreaInsets.top
         let offset = scrollView.contentOffset.y + defaultOffset
-        
         navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
+    }
+    
+    func collectionViewTableViewDidSelectCell(_ cell: CollectionViewTableViewCell, model: Preview) {
+        let movieViewController = MovieViewController()
+        movieViewController.setMovie(preview: model)
+        navigationController?.pushViewController(movieViewController, animated: true)
     }
 }

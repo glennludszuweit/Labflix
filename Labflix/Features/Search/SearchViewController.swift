@@ -12,7 +12,7 @@ class SearchViewController: UIViewController {
     private var movies: [Movie] = []
     private var searchTerm: String = ""
     
-    private let discoverTable: UITableView = {
+    private let searchTable: UITableView = {
         let table = UITableView()
         table.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
         return table
@@ -27,12 +27,12 @@ class SearchViewController: UIViewController {
     }()
     
     private func searchMovies() {
-        searchViewModel.getDiscoverMovies(apiUrl: "\(APIServices.searchMovies)\(searchTerm)")
+        searchViewModel.getSearchedMovies(apiUrl: APIServices.searchMovies, query: searchTerm)
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:
                     DispatchQueue.main.async {
-                        self?.discoverTable.reloadData()
+                        self?.searchTable.reloadData()
                     }
                     break
                 case .failure(let error):
@@ -50,7 +50,7 @@ class SearchViewController: UIViewController {
                 switch completion {
                 case .finished:
                     DispatchQueue.main.async {
-                        self?.discoverTable.reloadData()
+                        self?.searchTable.reloadData()
                     }
                     break
                 case .failure(let error):
@@ -61,39 +61,31 @@ class SearchViewController: UIViewController {
             }
             .store(in: &searchViewModel.cancellable)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
+        title = "Search"
+        navigationController?.navigationBar.tintColor = .label
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationItem.searchController = searchController
         
-        view.addSubview(discoverTable)
-        discoverTable.dataSource = self
-        discoverTable.delegate = self
+        view.addSubview(searchTable)
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchTable.dataSource = self
+        searchTable.delegate = self
         getDiscoverMovies()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        discoverTable.frame = view.bounds
+        searchTable.frame = view.bounds
     }
 }
 
-extension SearchViewController: UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating, UISearchBarDelegate {
-    func updateSearchResults(for searchController: UISearchController) {
-        if let text = searchController.searchBar.text {
-            self.searchTerm = text
-        }
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-            // Perform the submit button action here
-        searchMovies()
-        }
-    
+extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
     }
@@ -106,5 +98,27 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate, UISe
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
+    }
+}
+
+extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let text = searchController.searchBar.text {
+            self.searchTerm = text
+        }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if !self.searchTerm.trimmingCharacters(in: .whitespaces).isEmpty && self.searchTerm.trimmingCharacters(in: .whitespaces).count > 0 {
+            searchMovies()
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        getDiscoverMovies()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Working")
     }
 }

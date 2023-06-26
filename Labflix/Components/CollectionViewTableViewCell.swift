@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol CollectionViewTableViewCellDelegate: AnyObject {
+    func collectionViewTableViewDidSelectCell(_ cell: CollectionViewTableViewCell, model: Preview)
+}
+
 class CollectionViewTableViewCell: UITableViewCell {
     let homeViewModel = HomeViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
+    let movieViewModel = MovieViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
     static let identifier = "CollectionViewTableViewCell"
+    weak var delegate: CollectionViewTableViewCellDelegate?
     private var movies: [Movie] = []
     
     private let collectionView: UICollectionView = {
@@ -58,5 +64,30 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movies.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let movie = movies[indexPath.row]
+        var youtubeVideo: YoutubeVideo?
+        guard let title = movie.title else { return }
+        guard let overview = movie.overview else { return }
+        
+        movieViewModel.getMovie(apiUrl: "\(APIServices.youtubeSearch)", query: "\(title) trailer")
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    guard let youtubeVideo = youtubeVideo else { return }
+                    guard let strongSelf = self else { return }
+                    let preview = Preview(title: title, overview: overview, youtube: youtubeVideo)
+                    self?.delegate?.collectionViewTableViewDidSelectCell(strongSelf, model: preview)
+                    break
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            } receiveValue: { youtube in
+                youtubeVideo = youtube
+            }
+            .store(in: &homeViewModel.cancellable)
     }
 }
