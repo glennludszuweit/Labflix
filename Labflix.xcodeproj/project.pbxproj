@@ -38,6 +38,9 @@
 		D47E45A22A485FC7007E9870 /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45A12A485FC7007E9870 /* MovieViewController.swift */; };
 		D47E45A42A485FDB007E9870 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45A32A485FDB007E9870 /* MovieViewModel.swift */; };
 		D47E45A62A4860D4007E9870 /* Youtube.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E45A52A4860D4007E9870 /* Youtube.swift */; };
+		D4F5E0412A4C584E00A7EA30 /* MovieDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D4F5E03F2A4C584E00A7EA30 /* MovieDataModel.xcdatamodeld */; };
+		D4F5E0432A4C61B900A7EA30 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5E0422A4C61B900A7EA30 /* CoreDataManager.swift */; };
+		D4F5E0452A4C6BEB00A7EA30 /* DownloadsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F5E0442A4C6BEB00A7EA30 /* DownloadsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +94,9 @@
 		D47E45A12A485FC7007E9870 /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
 		D47E45A32A485FDB007E9870 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		D47E45A52A4860D4007E9870 /* Youtube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Youtube.swift; sourceTree = "<group>"; };
+		D4F5E0402A4C584E00A7EA30 /* MovieDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MovieDataModel.xcdatamodel; sourceTree = "<group>"; };
+		D4F5E0422A4C61B900A7EA30 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		D4F5E0442A4C6BEB00A7EA30 /* DownloadsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +160,7 @@
 				D47E45142A3C6F80007E9870 /* Assets.xcassets */,
 				D47E45162A3C6F80007E9870 /* LaunchScreen.storyboard */,
 				D47E45192A3C6F80007E9870 /* Info.plist */,
+				D4F5E03F2A4C584E00A7EA30 /* MovieDataModel.xcdatamodeld */,
 			);
 			path = Labflix;
 			sourceTree = "<group>";
@@ -217,6 +224,7 @@
 		D47E45452A408B6E007E9870 /* Downloads */ = {
 			isa = PBXGroup;
 			children = (
+				D4F5E0442A4C6BEB00A7EA30 /* DownloadsViewModel.swift */,
 				D47E45462A408B87007E9870 /* DownloadsViewController.swift */,
 			);
 			path = Downloads;
@@ -228,6 +236,7 @@
 				D47E455C2A41D0B4007E9870 /* APIServices.swift */,
 				D47E455E2A41D0B4007E9870 /* ErrorManager.swift */,
 				D47E455D2A41D0B4007E9870 /* NetworkManager.swift */,
+				D4F5E0422A4C61B900A7EA30 /* CoreDataManager.swift */,
 				D47E45542A41B7AA007E9870 /* Extensions.swift */,
 			);
 			path = Services;
@@ -403,6 +412,7 @@
 			files = (
 				D47E45442A408B3F007E9870 /* UpcomingViewController.swift in Sources */,
 				D47E45902A44591A007E9870 /* UpcomingViewModel.swift in Sources */,
+				D4F5E0452A4C6BEB00A7EA30 /* DownloadsViewModel.swift in Sources */,
 				D47E45412A408AD5007E9870 /* SearchViewController.swift in Sources */,
 				D47E45612A41D0B4007E9870 /* ErrorManager.swift in Sources */,
 				D47E459B2A461D20007E9870 /* SearchViewModel.swift in Sources */,
@@ -419,10 +429,12 @@
 				D47E454D2A418499007E9870 /* HeroHeaderView.swift in Sources */,
 				D47E45552A41B7AA007E9870 /* Extensions.swift in Sources */,
 				D47E45102A3C6F7E007E9870 /* MainController.swift in Sources */,
+				D4F5E0432A4C61B900A7EA30 /* CoreDataManager.swift in Sources */,
 				D47E450C2A3C6F7E007E9870 /* AppDelegate.swift in Sources */,
 				D47E450E2A3C6F7E007E9870 /* SceneDelegate.swift in Sources */,
 				D47E453E2A408A96007E9870 /* HomeViewController.swift in Sources */,
 				D47E45642A41E7EE007E9870 /* Movie.swift in Sources */,
+				D4F5E0412A4C584E00A7EA30 /* MovieDataModel.xcdatamodeld in Sources */,
 				D47E45A62A4860D4007E9870 /* Youtube.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -773,6 +785,19 @@
 			productName = SDWebImageMapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		D4F5E03F2A4C584E00A7EA30 /* MovieDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D4F5E0402A4C584E00A7EA30 /* MovieDataModel.xcdatamodel */,
+			);
+			currentVersion = D4F5E0402A4C584E00A7EA30 /* MovieDataModel.xcdatamodel */;
+			path = MovieDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D47E45002A3C6F7E007E9870 /* Project object */;
 }

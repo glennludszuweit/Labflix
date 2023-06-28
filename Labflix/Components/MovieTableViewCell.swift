@@ -7,9 +7,13 @@
 
 import UIKit
 import SDWebImage
+import Combine
 
 class MovieTableViewCell: UITableViewCell {
     static let identifier = "MovieTableViewCell"
+//    private var downloadsViewModel: DownloadsViewModel!
+//    private var cancellables: Set<AnyCancellable> = []
+//    private var movie: Movie!
     
     private let posterImageView: UIImageView = {
         let imageView = UIImageView()
@@ -27,14 +31,14 @@ class MovieTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let playButton: UIButton = {
-        let button = UIButton()
-        let image = UIImage(systemName: "play.circle", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30))
-        button.setImage(image, for: .normal)
-        button.tintColor = .label
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+//    private let downloadButton: UIButton = {
+//        let button = UIButton()
+//        let image = UIImage(systemName: "arrow.down.to.line", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20))
+//        button.setImage(image, for: .normal)
+//        button.tintColor = .label
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
     
     private func applyConstraints() {
         let posterImageViewConstraints = [
@@ -48,23 +52,31 @@ class MovieTableViewCell: UITableViewCell {
             movieLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             movieLabel.widthAnchor.constraint(equalToConstant: 200),
         ]
-        let playButtonConstraints = [
-            playButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            playButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-        ]
+//        let playButtonConstraints = [
+//            downloadButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+//            downloadButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+//        ]
         
         NSLayoutConstraint.activate(posterImageViewConstraints)
         NSLayoutConstraint.activate(movieLabelConstraints)
-        NSLayoutConstraint.activate(playButtonConstraints)
+//        NSLayoutConstraint.activate(playButtonConstraints)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(posterImageView)
         contentView.addSubview(movieLabel)
-        contentView.addSubview(playButton)
+//        contentView.addSubview(downloadButton)
+//        downloadButton.addTarget(self, action: #selector(downloadButtonTapped), for: .touchUpInside)
         
         applyConstraints()
+        
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            fatalError("AppDelegate not found")
+//        }
+//        let context = appDelegate.persistentContainer.viewContext
+//        let coreDataManager = CoreDataManager<MovieEntity>(context: context)
+//        downloadsViewModel = DownloadsViewModel(coreDataManager: coreDataManager)
     }
     
     required init?(coder: NSCoder) {
@@ -80,5 +92,11 @@ class MovieTableViewCell: UITableViewCell {
         guard let imageUrl = URL(string: "\(APIServices.imageBaseUrl500)\(movie.posterPath ?? "")") else { return }
         movieLabel.text = movie.originalTitle
         posterImageView.sd_setImage(with: imageUrl)
+//        self.movie = movie
     }
+    
+//    @objc func downloadButtonTapped() {
+//        print("test")
+//        downloadsViewModel.saveMovie(movie: self.movie)
+//    }
 }

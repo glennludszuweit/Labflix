@@ -10,12 +10,32 @@ import UIKit
 class HomeViewController: UIViewController {
     private let homeViewModel = HomeViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
     private let movieViewModel = MovieViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
+    private var randomTrendingMovie: Movie?
+    private var headerView: HeroHeaderView?
     
     private let homeTable: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         table.register(CollectionViewTableViewCell.self, forCellReuseIdentifier: CollectionViewTableViewCell.identifier)
         return table
     }()
+    
+    private func setRandomTrendingMovie() {
+        homeViewModel.getMovies(apiUrl: APIServices.trendingMovies)
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    if let randomMovie = self?.randomTrendingMovie {
+                        self?.headerView?.configureHeroImageView(with: randomMovie)
+                    }
+                    break
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            } receiveValue: { [weak self] movies in
+                self?.randomTrendingMovie = movies.randomElement()
+            }
+            .store(in: &homeViewModel.cancellable)
+    }
     
     private func configureNavBar() {
         var logo = UIImage(named: "logo")
@@ -30,16 +50,22 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        let headerView = HeroHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 500))
+        headerView = HeroHeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height / 1.75))
 
         view.backgroundColor = .systemBackground
         view.addSubview(homeTable)
         
         configureNavBar()
+        setRandomTrendingMovie()
         
         homeTable.dataSource = self
         homeTable.delegate = self
         homeTable.tableHeaderView = headerView
+        
+        guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {return}
+        
+        let sqlitePath = url.appendingPathComponent("Movie_CoreData.sqlite")
+        print(sqlitePath)
     }
     
     override func viewDidLayoutSubviews() {
@@ -155,9 +181,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate, Collec
         navigationController?.navigationBar.transform = .init(translationX: 0, y: min(0, -offset))
     }
     
-    func collectionViewTableViewDidSelectCell(_ cell: CollectionViewTableViewCell, model: Preview) {
+    func collectionViewTableViewDidSelectCell(_ cell: CollectionViewTableViewCell, model: Preview, movie: Movie) {
         let movieViewController = MovieViewController()
-        movieViewController.setMovie(preview: model)
+        movieViewController.setMovie(with: model)
+        movieViewController.getMovie(with: movie)
         navigationController?.pushViewController(movieViewController, animated: true)
     }
 }

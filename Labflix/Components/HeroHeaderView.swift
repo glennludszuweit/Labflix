@@ -8,15 +8,23 @@
 import UIKit
 
 class HeroHeaderView: UIView {
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 32, weight: .bold)
+        return label
+    }()
+    
     private let heroImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.image = UIImage(named: "flash")
         return imageView
     }()
     
-    private let playButton:UIButton = {
+    private let playButton: UIButton = {
         let button = UIButton()
         button.setTitle("Play", for: .normal)
         button.setTitleColor(.label, for: .normal)
@@ -49,6 +57,13 @@ class HeroHeaderView: UIView {
     }
     
     private func applyActionButtonConstraints() {
+        let titleLabelConstraints = [
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -120),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ]
+        
         let playButtonConstrains = [
             playButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 70),
             playButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30),
@@ -63,6 +78,7 @@ class HeroHeaderView: UIView {
         
         NSLayoutConstraint.activate(playButtonConstrains)
         NSLayoutConstraint.activate(downloadButtonConstrains)
+        NSLayoutConstraint.activate(titleLabelConstraints)
     }
     
     override init(frame: CGRect) {
@@ -71,6 +87,7 @@ class HeroHeaderView: UIView {
         addGradient()
         
         addSubview(playButton)
+        addSubview(titleLabel)
         addSubview(downloadButton)
         applyActionButtonConstraints()
     }
@@ -82,5 +99,11 @@ class HeroHeaderView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+    
+    func configureHeroImageView(with movie: Movie) {
+        guard let imageUrl = URL(string: "\(APIServices.imageBaseUrl500)\(movie.posterPath ?? "")") else { return }
+        titleLabel.text = movie.title
+        heroImageView.sd_setImage(with: imageUrl)
     }
 }

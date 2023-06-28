@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CollectionViewTableViewCellDelegate: AnyObject {
-    func collectionViewTableViewDidSelectCell(_ cell: CollectionViewTableViewCell, model: Preview)
+    func collectionViewTableViewDidSelectCell(_ cell: CollectionViewTableViewCell, model: Preview, movie: Movie)
 }
 
 class CollectionViewTableViewCell: UITableViewCell {
@@ -80,7 +80,7 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource, UICollectionV
                     guard let youtubeVideo = youtubeVideo else { return }
                     guard let strongSelf = self else { return }
                     let preview = Preview(title: title, overview: overview, youtube: youtubeVideo)
-                    self?.delegate?.collectionViewTableViewDidSelectCell(strongSelf, model: preview)
+                    self?.delegate?.collectionViewTableViewDidSelectCell(strongSelf, model: preview, movie: movie)
                     break
                 case .failure(let error):
                     print("Error: \(error)")
@@ -88,6 +88,6 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource, UICollectionV
             } receiveValue: { youtube in
                 youtubeVideo = youtube
             }
-            .store(in: &homeViewModel.cancellable)
+            .store(in: &movieViewModel.cancellable)
     }
 }

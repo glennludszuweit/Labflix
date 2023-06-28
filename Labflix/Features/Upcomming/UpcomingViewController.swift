@@ -9,6 +9,7 @@ import UIKit
 
 class UpcomingViewController: UIViewController {
     private let upcomingViewModel = UpcomingViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
+    private let movieViewModel = MovieViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
     private var movies: [Movie] = []
     
     private let upcomingTable: UITableView = {
@@ -71,6 +72,29 @@ extension UpcomingViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("working")
+        tableView.deselectRow(at: indexPath, animated: true)
+        let movie = movies[indexPath.row]
+        var youtubeVideo: YoutubeVideo?
+        guard let title = movie.title else { return }
+        guard let overview = movie.overview else { return }
+        
+        movieViewModel.getMovie(apiUrl: "\(APIServices.youtubeSearch)", query: "\(title) trailer")
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    guard let youtubeVideo = youtubeVideo else { return }
+                    let preview = Preview(title: title, overview: overview, youtube: youtubeVideo)
+                    let movieViewController = MovieViewController()
+                    movieViewController.setMovie(with: preview)
+                    movieViewController.getMovie(with: movie)
+                    self?.navigationController?.pushViewController(movieViewController, animated: true)
+                    break
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            } receiveValue: { youtube in
+                youtubeVideo = youtube
+            }
+            .store(in: &movieViewModel.cancellable)
     }
 }
