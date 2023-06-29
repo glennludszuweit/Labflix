@@ -136,10 +136,7 @@ class MovieViewController: UIViewController {
         NSLayoutConstraint.activate(downloadButtonConstraints)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationController?.navigationBar.tintColor = .label
-        view.backgroundColor = .systemBackground
+    private func setupSubViews() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(webView)
@@ -148,7 +145,14 @@ class MovieViewController: UIViewController {
         contentView.addSubview(downloadButton)
         
         downloadButton.addTarget(self, action: #selector(downloadButtonTapped), for: .touchUpInside)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.navigationBar.tintColor = .label
+        view.backgroundColor = .systemBackground
         
+        setupSubViews()
         applyConstraints()
         setupViewModel()
     }
@@ -166,20 +170,28 @@ class MovieViewController: UIViewController {
         overviewLabel.text = preview.overview
     }
     
+    private func updateDownloadButtonVisibility() {
+        self.downloadButton.isHidden = true
+        setupSubViews()
+        applyConstraints()
+        setupViewModel()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            guard let self = self else { return }
+            let isDownloaded = self.movies.contains { $0.title == self.movie.title }
+            self.downloadButton.isHidden = isDownloaded
+            
+        }
+    }
+    
     func getMovie(with movie: Movie) {
         self.movie = movie
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let isDownloaded = self.movies.contains { $0.title == movie.title }
-            if isDownloaded {
-                self.downloadButton.isHidden = true
-            } else {
-                self.downloadButton.isHidden = false
-            }
-        }
+        updateDownloadButtonVisibility()
     }
     
     @objc func downloadButtonTapped() {
         downloadsViewModel.saveMovie(movie: self.movie)
+        updateDownloadButtonVisibility()
     }
 }
 

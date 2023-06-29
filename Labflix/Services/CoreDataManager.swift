@@ -65,8 +65,6 @@ class CoreDataManager<T: NSManagedObject>: CoreDataProtocol {
     
     private func isSimilarItemExists(_ item: Entity) -> Bool {
         let fetchRequest: NSFetchRequest<Entity> = Entity.fetchRequest() as! NSFetchRequest<T>
-        // Create a predicate to check for similarity between the existing item and the item being saved.
-        // Modify this predicate based on your specific requirements.
         let predicate = NSPredicate(format: "objectID = %@", item.objectID)
         fetchRequest.predicate = predicate
         
