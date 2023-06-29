@@ -11,9 +11,33 @@ import Combine
 import CoreData
 
 class MovieViewController: UIViewController {
-    private var downloadsViewModel: DownloadsViewModel!
+    //    private var downloadsViewModel: DownloadsViewModel!
     private var cancellables: Set<AnyCancellable> = []
     private var movie: Movie!
+    
+    private var movies: [Movie] = [] {
+        didSet {
+            print("data loaded")
+        }
+    }
+    
+    private let downloadsViewModel: DownloadsViewModel = {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("AppDelegate not found")
+        }
+        let context = appDelegate.persistentContainer.viewContext
+        let coreDataManager = CoreDataManager<MovieEntity>(context: context)
+        return DownloadsViewModel(coreDataManager: coreDataManager)
+    }()
+    
+    private func setupViewModel() {
+        downloadsViewModel.fetchMovies()
+        downloadsViewModel.moviesPublisher
+            .sink { [weak self] movies in
+                self?.movies = movies
+            }
+            .store(in: &cancellables)
+    }
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -57,6 +81,7 @@ class MovieViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = true
+        button.isHidden = true
         return button
     }()
     
@@ -121,21 +146,15 @@ class MovieViewController: UIViewController {
         contentView.addSubview(titleLabel)
         contentView.addSubview(overviewLabel)
         contentView.addSubview(downloadButton)
+        
         downloadButton.addTarget(self, action: #selector(downloadButtonTapped), for: .touchUpInside)
         
         applyConstraints()
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            fatalError("AppDelegate not found")
-        }
-        let context = appDelegate.persistentContainer.viewContext
-        let coreDataManager = CoreDataManager<MovieEntity>(context: context)
-        downloadsViewModel = DownloadsViewModel(coreDataManager: coreDataManager)
+        setupViewModel()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        // Adjust content inset behavior to remove the top whitespace
         scrollView.contentInset = UIEdgeInsets(top: -scrollView.safeAreaInsets.top + 100, left: 0, bottom: 0, right: 0)
         scrollView.scrollIndicatorInsets = scrollView.contentInset
     }
@@ -149,10 +168,17 @@ class MovieViewController: UIViewController {
     
     func getMovie(with movie: Movie) {
         self.movie = movie
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            let isDownloaded = self.movies.contains { $0.title == movie.title }
+            if isDownloaded {
+                self.downloadButton.isHidden = true
+            } else {
+                self.downloadButton.isHidden = false
+            }
+        }
     }
     
     @objc func downloadButtonTapped() {
-        print("test")
         downloadsViewModel.saveMovie(movie: self.movie)
     }
 }

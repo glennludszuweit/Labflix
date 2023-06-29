@@ -11,6 +11,8 @@ import Combine
 
 class DownloadsViewController: UIViewController {
     private var cancellables: Set<AnyCancellable> = []
+    private let movieViewModel = MovieViewModel(networkManager: NetworkManager(), errorManager: ErrorManager())
+    
     private let downloadsViewModel: DownloadsViewModel = {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             fatalError("AppDelegate not found")
@@ -23,12 +25,12 @@ class DownloadsViewController: UIViewController {
     private var movies: [Movie] = [] {
         didSet {
             DispatchQueue.main.async { [weak self] in
-                self?.upcomingTable.reloadData()
+                self?.downloadsTable.reloadData()
             }
         }
     }
     
-    private let upcomingTable: UITableView = {
+    private let downloadsTable: UITableView = {
         let table = UITableView()
         table.register(MovieTableViewCell.self, forCellReuseIdentifier: MovieTableViewCell.identifier)
         return table
@@ -50,16 +52,16 @@ class DownloadsViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         
-        view.addSubview(upcomingTable)
-        upcomingTable.dataSource = self
-        upcomingTable.delegate = self
+        view.addSubview(downloadsTable)
+        downloadsTable.dataSource = self
+        downloadsTable.delegate = self
         
         setupViewModel()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        upcomingTable.frame = view.bounds
+        downloadsTable.frame = view.bounds
     }
 }
 
@@ -84,14 +86,24 @@ extension DownloadsViewController: UITableViewDataSource, UITableViewDelegate {
         var youtubeVideo: YoutubeVideo?
         guard let title = movie.title else { return }
         guard let overview = movie.overview else { return }
-        guard let youtubeVideo = youtubeVideo else { return }
         
-        // Your existing code for getting the Youtube video
-        
-        let preview = Preview(title: title, overview: overview, youtube: youtubeVideo)
-        let movieViewController = MovieViewController()
-        movieViewController.setMovie(with: preview)
-        movieViewController.getMovie(with: movie)
-        navigationController?.pushViewController(movieViewController, animated: true)
+        movieViewModel.getMovie(apiUrl: "\(APIServices.youtubeSearch)", query: "\(title) trailer")
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    guard let youtubeVideo = youtubeVideo else { return }
+                    let preview = Preview(title: title, overview: overview, youtube: youtubeVideo)
+                    let movieViewController = MovieViewController()
+                    movieViewController.setMovie(with: preview)
+                    movieViewController.getMovie(with: movie)
+                    self?.navigationController?.pushViewController(movieViewController, animated: true)
+                    break
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+            } receiveValue: { youtube in
+                youtubeVideo = youtube
+            }
+            .store(in: &movieViewModel.cancellable)
     }
 }

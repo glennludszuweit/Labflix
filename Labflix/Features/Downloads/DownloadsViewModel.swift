@@ -10,9 +10,7 @@ import Combine
 
 class DownloadsViewModel {
     private let coreDataManager: CoreDataManager<MovieEntity>
-    
     private var cancellables: Set<AnyCancellable> = []
-    
     private var movies: [Movie] = [] {
         didSet {
             moviesSubject.send(movies)
