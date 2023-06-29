@@ -11,9 +11,6 @@ import Combine
 
 class MovieTableViewCell: UITableViewCell {
     static let identifier = "MovieTableViewCell"
-//    private var downloadsViewModel: DownloadsViewModel!
-//    private var cancellables: Set<AnyCancellable> = []
-//    private var movie: Movie!
     
     private let posterImageView: UIImageView = {
         let imageView = UIImageView()
@@ -23,60 +20,85 @@ class MovieTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    private let movieLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         return label
     }()
     
-//    private let downloadButton: UIButton = {
-//        let button = UIButton()
-//        let image = UIImage(systemName: "arrow.down.to.line", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20))
-//        button.setImage(image, for: .normal)
-//        button.tintColor = .label
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//    }()
+    private let overviewLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        return label
+    }()
+    
+    private let releaseLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
+        return label
+    }()
+    
+    private let ratingsLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
+        return label
+    }()
     
     private func applyConstraints() {
         let posterImageViewConstraints = [
             posterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             posterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
             posterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-            posterImageView.widthAnchor.constraint(equalToConstant: 75)
+            posterImageView.widthAnchor.constraint(equalToConstant: 100)
         ]
-        let movieLabelConstraints = [
-            movieLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 20),
-            movieLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            movieLabel.widthAnchor.constraint(equalToConstant: 200),
+        let titleLabelConstraints = [
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.topAnchor, constant: 40),
+            titleLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 20),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
         ]
-//        let playButtonConstraints = [
-//            downloadButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-//            downloadButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-//        ]
+        let overviewLabelConstraints = [
+            overviewLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            overviewLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 20),
+            overviewLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            overviewLabel.heightAnchor.constraint(equalToConstant: 80)
+        ]
+        let releaseLabelConstraints = [
+            releaseLabel.bottomAnchor.constraint(equalTo: ratingsLabel.topAnchor),
+            releaseLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 20),
+            releaseLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
+        ]
+        let ratingsLabelConstraints = [
+            ratingsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            ratingsLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: 20),
+            ratingsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
+        ]
         
         NSLayoutConstraint.activate(posterImageViewConstraints)
-        NSLayoutConstraint.activate(movieLabelConstraints)
-//        NSLayoutConstraint.activate(playButtonConstraints)
+        NSLayoutConstraint.activate(titleLabelConstraints)
+        NSLayoutConstraint.activate(overviewLabelConstraints)
+        NSLayoutConstraint.activate(releaseLabelConstraints)
+        NSLayoutConstraint.activate(ratingsLabelConstraints)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(posterImageView)
-        contentView.addSubview(movieLabel)
-//        contentView.addSubview(downloadButton)
-//        downloadButton.addTarget(self, action: #selector(downloadButtonTapped), for: .touchUpInside)
-        
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(overviewLabel)
+        contentView.addSubview(releaseLabel)
+        contentView.addSubview(ratingsLabel)
+
         applyConstraints()
-        
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-//            fatalError("AppDelegate not found")
-//        }
-//        let context = appDelegate.persistentContainer.viewContext
-//        let coreDataManager = CoreDataManager<MovieEntity>(context: context)
-//        downloadsViewModel = DownloadsViewModel(coreDataManager: coreDataManager)
     }
     
     required init?(coder: NSCoder) {
@@ -90,13 +112,10 @@ class MovieTableViewCell: UITableViewCell {
     
     func setCellData(with movie: Movie) {
         guard let imageUrl = URL(string: "\(APIServices.imageBaseUrl500)\(movie.posterPath ?? "")") else { return }
-        movieLabel.text = movie.originalTitle
+        titleLabel.text = movie.originalTitle
+        overviewLabel.text = movie.overview
+        releaseLabel.text = "Release date: \(movie.releaseDate ?? "")"
+        ratingsLabel.text = "Ratings: \(movie.voteAverage ?? 0.0) out of 10"
         posterImageView.sd_setImage(with: imageUrl)
-//        self.movie = movie
     }
-    
-//    @objc func downloadButtonTapped() {
-//        print("test")
-//        downloadsViewModel.saveMovie(movie: self.movie)
-//    }
 }

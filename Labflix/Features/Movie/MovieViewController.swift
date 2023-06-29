@@ -149,8 +149,9 @@ class MovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.tintColor = .label
         view.backgroundColor = .systemBackground
+        title = movie.title
+        navigationController?.navigationItem.backButtonDisplayMode = .default
         
         setupSubViews()
         applyConstraints()
