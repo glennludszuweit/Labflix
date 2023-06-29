@@ -26,3 +26,4 @@ Feel free to clone, reuse and improve codebase.
 This project is build with MVVM architecture.
 
 ## Screenshots
+![Image alt text](./labflix-1.png)
