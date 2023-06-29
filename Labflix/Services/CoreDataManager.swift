@@ -18,7 +18,6 @@ protocol CoreDataProtocol {
 
 class CoreDataManager<T: NSManagedObject>: CoreDataProtocol {
     typealias Entity = T
-    
     let context: NSManagedObjectContext
     
     init(context: NSManagedObjectContext) {
@@ -30,10 +29,11 @@ class CoreDataManager<T: NSManagedObject>: CoreDataProtocol {
         
         context.perform {
             do {
-//                try self.deleteData()
                 data.forEach { item in
-                    let entity = T(context: self.context)
-                    entity.setValues(from: item)
+                    if !self.isSimilarItemExists(item) {
+                        let entity = T(context: self.context)
+                        entity.setValues(from: item)
+                    }
                 }
                 try self.context.save()
                 subject.send()
@@ -63,10 +63,18 @@ class CoreDataManager<T: NSManagedObject>: CoreDataProtocol {
         return subject.eraseToAnyPublisher()
     }
     
-    private func deleteData() throws {
+    private func isSimilarItemExists(_ item: Entity) -> Bool {
         let fetchRequest: NSFetchRequest<Entity> = Entity.fetchRequest() as! NSFetchRequest<T>
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest as! NSFetchRequest<NSFetchRequestResult>)
+        // Create a predicate to check for similarity between the existing item and the item being saved.
+        // Modify this predicate based on your specific requirements.
+        let predicate = NSPredicate(format: "objectID = %@", item.objectID)
+        fetchRequest.predicate = predicate
         
-        try context.execute(deleteRequest)
+        do {
+            let count = try context.count(for: fetchRequest)
+            return count > 0
+        } catch {
+            return false
+        }
     }
 }

@@ -45,6 +45,12 @@ class DownloadsViewController: UIViewController {
             .store(in: &cancellables)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupViewModel()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -52,11 +58,11 @@ class DownloadsViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         
-        view.addSubview(downloadsTable)
+        setupViewModel()
         downloadsTable.dataSource = self
         downloadsTable.delegate = self
         
-        setupViewModel()
+        view.addSubview(downloadsTable)
     }
     
     override func viewDidLayoutSubviews() {
