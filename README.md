@@ -13,6 +13,7 @@ Feel free to clone, reuse and improve codebase.
 - User will be able to play movies.
 - User will be able download movies.
 - User will be able remove a movie from the downloads tab.
+- Light and Dark theme.
 
 ## Technology
 - UIKit
