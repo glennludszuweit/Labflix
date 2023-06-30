@@ -27,3 +27,4 @@ This project is build with MVVM architecture.
 
 ## Screenshots
 ![Image alt text](./labflix-1.png)
+![Image alt text](./labflix-2.png)

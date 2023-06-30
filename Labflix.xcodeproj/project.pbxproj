@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D41E93382A49D48A00427694 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41E93372A49D48A00427694 /* Preview.swift */; };
 		D430A58E2A4D9AE4005CB953 /* labflix-1.png in Resources */ = {isa = PBXBuildFile; fileRef = D430A58D2A4D9AE3005CB953 /* labflix-1.png */; };
+		D430A5902A4ECB25005CB953 /* labflix-2.png in Resources */ = {isa = PBXBuildFile; fileRef = D430A58F2A4ECB24005CB953 /* labflix-2.png */; };
 		D47E450C2A3C6F7E007E9870 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E450B2A3C6F7E007E9870 /* AppDelegate.swift */; };
 		D47E450E2A3C6F7E007E9870 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E450D2A3C6F7E007E9870 /* SceneDelegate.swift */; };
 		D47E45102A3C6F7E007E9870 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47E450F2A3C6F7E007E9870 /* MainController.swift */; };
@@ -64,6 +65,7 @@
 /* Begin PBXFileReference section */
 		D41E93372A49D48A00427694 /* Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 		D430A58D2A4D9AE3005CB953 /* labflix-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "labflix-1.png"; sourceTree = "<group>"; };
+		D430A58F2A4ECB24005CB953 /* labflix-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "labflix-2.png"; sourceTree = "<group>"; };
 		D47E45082A3C6F7E007E9870 /* Labflix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Labflix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D47E450B2A3C6F7E007E9870 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D47E450D2A3C6F7E007E9870 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 		D47E44FF2A3C6F7E007E9870 = {
 			isa = PBXGroup;
 			children = (
+				D430A58F2A4ECB24005CB953 /* labflix-2.png */,
 				D430A58D2A4D9AE3005CB953 /* labflix-1.png */,
 				D47E45982A44EFCD007E9870 /* README.md */,
 				D47E450A2A3C6F7E007E9870 /* Labflix */,
@@ -386,6 +389,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D430A5902A4ECB25005CB953 /* labflix-2.png in Resources */,
 				D430A58E2A4D9AE4005CB953 /* labflix-1.png in Resources */,
 				D47E45992A44EFCD007E9870 /* README.md in Resources */,
 				D47E45182A3C6F80007E9870 /* LaunchScreen.storyboard in Resources */,
